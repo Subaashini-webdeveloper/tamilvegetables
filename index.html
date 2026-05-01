@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruits in Tamil for Kids</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; background-color: #f0f8ff; padding: 20px; }
+        h1 { color: #2c3e50; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto; }
+        .card { background: white; border-radius: 15px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.2s; border: 4px solid transparent; }
+        .card:hover { transform: scale(1.05); border-color: #3498db; }
+        /*.img-box{width:75%; height:75%; border-radius: 10px; margin-bottom: 10px; border: 1px solid #ddd; position: relative; top: 15px; left: 15px;}*/
+        .tamil-text { font-size: 1.2rem; font-weight: bold; display: block; margin-top: 5px; }
+        .english-text { color: #7f8c8d; font-style: italic; }
+        .speaker-icon { font-size: 1.2rem; vertical-align: middle; margin-left: 5px; }
+        /* This is the outer colored container */
+        .color-box {width: 100%; height: 150px;border-radius: 12px; margin-bottom: 10px; border: 1px solid rgba(0,0,0,0.1); display: flex;  justify-content: center; align-items: center; overflow:hidden;}
+        /* This is the container for the actual PNG/Image */
+        .img-box {width: 90%; height: 90%;display: flex; justify-content: center; align-items: center;}
+        /* This ensures the fruit image itself fits correctly */
+        .img-box img {max-width: 100%; max-height: 100%; width:auto; height:auto; align-items: contain; }
+    </style>
+</head>
+<body>
+
+    <h1> காய்கறிகள்(Vegetables)</h1>
+    <p>காய்கறிகளை அழுத்தினால் அதன் பெயரையும் தமிழில் கேட்கலாம்!</p>
+    <p>Press the fruits to hear how to say them in tamil and their colors</p>
+
+    <div class="grid" id="VegeGrid"></div>
+
+    <script>
+        const Vegetables = [
+            { tamil: "உருளைக்கிழங்கு", english: "Potato", hex: "#C4A484", sound: "potato.mp3", img: "potato.png"},
+            { tamil: "தக்காளி", english: "Tomato", hex: "#FF0000", sound: "tomato.mp3", img: "tomato.png"},
+            { tamil: "வெங்காயம்", english: "Onion", hex: "#D3A6BB", sound: "onion.mp3", img: "onion.png"},
+            { tamil: "வாழைகாய்", english: "Unripe Banana", hex: "#2ECC71", sound: "vazhaikai.mp3", img: "vazhakai.png"},
+            { tamil: "பூண்டு", english: "Garlic", hex: "#FCF7EE", sound: "garlic.mp3", img: "garlic.png"},
+            { tamil: "கத்தரிக்காய்", english: "Brinjal", hex: "#82037E", sound: "brinjal.mp3", img: "brinjal.png"},
+            { tamil: "பாகற்காய்", english: "Bitterguard", hex: "#2ECC71", sound: "bitterguard.mp3", img: "bitterguard.png"},
+            { tamil: "முருங்கைக்காய்", english: "Drumstick", hex: "#2ECC71",sound: "drumstick.mp3", img: "drumstick.png"},
+            { tamil: "காளான்", english: "Mushroom", hex: "#C4A484", sound: "orange.mp3", img: "mushroom.png"},
+            { tamil: "பட்டாணி", english: "Peas", hex: "#2ECC71",sound: "peas.mp3", img: "peas.png"},
+            { tamil: "பூசணி", english: "Pumpkin", hex: "#F1C40F", sound: "pumpkin.mp3", img: "pumpkin.png"},
+            { tamil: "கீரைகள்", english: "Greens", hex: "#2ECC71",sound: "greens.mp3", img:"greens.png"},
+            { tamil: "கொத்தமல்லி", english: "Cilantro", hex:"#2ECC71",sound: "cilantro.mp3", img:"cilantro.png"},
+            { tamil: "கறிவேப்பிலை", english: "Curry leaves", hex: "#FF0000",sound: "curry.mp3", img: "curry.png"},
+            { tamil: "முட்டைக்கோஸ்", english: "Cabbage", hex: "#E7FFE7",sound: "cabbage.mp3", img: "cabbage.png"},
+            { tamil: "வெண்டைக்காய்", english: "Ladies Finger", hex: "#2ECC71", sound: "ladiesfinger.mp3", img: "ladiesfinger.png"},
+            { tamil: "சொரக்காய்", english: "Bottle guard", hex: "#2ECC71",sound: "bottleguard.mp3", img:"bottleguard.png"},
+            { tamil: "பீர்க்கங்கை", english: "Ridge guard", hex:"#2ECC71",sound: "ridgeguard.mp3", img:"ridgeguard.png"},
+            { tamil: "கருணைகிழங்கு", english: "Elephant yam", hex: "#FF0000",sound: "yam.mp3", img: "yam.png"},
+            { tamil: "வாழைத்தண்டு", english: "Bananastem", hex:"#FCF7EE",sound: "bananastem.mp3", img:"bananastem.png"},
+            { tamil: "வாழைப்பூ", english: "Bananaflower", hex: "#FF0000",sound: "bananaflower.mp3", img: "bananaflower.png"},
+            { tamil: "மிளகாய்", english: "Milagai", hex:"#FCF7EE",sound: "chilli.mp3", img:"chilli.png"},
+            { tamil: "குடைமிளகாய்", english: "Capcicum", hex: "#FF0000",sound: "capcicum.mp3", img: "capcicum.png"}
+        ];
+
+        function playSound(file) {
+            const audio = new Audio(file);
+            audio.play().catch(e => console.log("Click the page first to enable audio!"));
+        }
+
+        const grid = document.getElementById('VegeGrid');
+
+        
+        Vegetables.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.onclick = () => playSound(item.sound);
+            
+            
+            card.innerHTML = `
+                <div class="color-box" style="background-color: ${item.hex}">
+                    <div class="img-box" >
+                        <img src="${item.img}" alt="${item.english}">
+                    </div>
+                </div>
+                <span class="tamil-text">${item.tamil} <span class="speaker-icon">🔊</span></span>
+                <span class="english-text">${item.english}</span>
+            `;
+            grid.appendChild(card);
+        });
+    </script>
+</body>
+</html>
